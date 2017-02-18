@@ -1,43 +1,37 @@
 sudo: false
-
 language: php
-
 notifications:
   email:
     on_success: never
     on_failure: change
-
-branches:
-  only:
-    - master
-
 php:
-  - 5.3
-  - 5.6
-
+- 7.0
 env:
-  - WP_VERSION=latest WP_MULTISITE=0
-  - WP_VERSION=3.7 WP_MULTISITE=0
-  - WP_VERSION=4.8-alpha-40076 WP_MULTISITE=0
-
-matrix:
-  include:
-    - php: 5.3
-      env: WP_VERSION=latest WP_MULTISITE=1
-
+- WP_VERSION=nightly WP_MULTISITE=0
+- WP_VERSION=latest WP_MULTISITE=0
 before_script:
-  - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
-  - export PATH="$HOME/.composer/vendor/bin:$PATH"
-  - |
-    if [[ ${TRAVIS_PHP_VERSION:0:2} == "7." ]]; then
-      composer global require "phpunit/phpunit=5.7.*"
-    else
-      composer global require "phpunit/phpunit=4.8.*"
-    fi
-  - |
-    composer global require wp-coding-standards/wpcs
-    phpcs --config-set installed_paths $HOME/.composer/vendor/wp-coding-standards/wpcs
-
+- bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
+- export PATH="$HOME/.composer/vendor/bin:$PATH"
+- |
+  if [[ ${TRAVIS_PHP_VERSION:0:2} == "7." ]]; then
+    composer global require "phpunit/phpunit=5.7.*"
+  else
+    composer global require "phpunit/phpunit=4.8.*"
+  fi
+- |
+  composer global require wp-coding-standards/wpcs
+  phpcs --config-set installed_paths $HOME/.composer/vendor/wp-coding-standards/wpcs
 script:
-  - phpcs --standard=phpcs.ruleset.xml $(find . -name '*.php')
-  - phpunit
+- phpcs --standard=phpcs.ruleset.xml $(find . -name '*.php')
+- phpunit
+after_success:
+- sed -i -e "s/nightly/${TRAVIS_TAG}/" $(basename $TRAVIS_REPO_SLUG).php
+- curl https://raw.githubusercontent.com/miya0001/auto-build/master/auto-build.sh | bash
+deploy:
+  provider: releases
+  api_key:
+    secure: ia2IQKEuxY35FYJLQ2BWsbAjii5GUZqX4PRlmU5O2zF3i+pE0V67bxTghUXTGHwu3y4JCYjvjWCCJpox6qa2EbCC9E1AI4yNIuyUckvMyTV8NiSj8XIAEQys9VwvS6OFjS7rbh1MgncFU3nsV+sWbjpaWD4EHEdtf2k1ORYNV4Y8EKuufCGTihjUZ9pznQQ0WGeBxH337a9EO3dceQMsfdO1x1ooVzzRcudOyABCY/awXCsH5FLSMva8/3yhHsVzlfiTqcCQpJvpLmb1JiPTuv6UOZWGVzFjTlAxTG0KsIZOWLbk7q8JvSoE3hMPSdKDeZLG7CJ1+WavdsvXGO6Op/jNKudbJYQSWvmTdEUZsPXs2dII1kpKe/VWnKZo12jt0GyRGn056ecMnEvKMCdgPHIpfWY1WP2uLvPnW0UZ/uyEt4Qy3mtjRgDs5tvQYftpYD9BZZwFCk+7l31vlZWLDUPgDLd5s4wLVbSsKJpKDwHzHLj8/x0+E0vxtvOKmkhhcsX5h4V9hMl35eVXKELl9UXIl6Q9EXMuWCDRNMDQd9jB8W0fLdhOxkjCXFegQ2ey/pl43wekJotXxRUYljWx4C2u//XS/tFNR8ZhLeAX2c1npaPFLo5870N2SIm4dBpEXWx4Bv/d2+6BcnbhXMi1OsVH2r9A7RAdy1H+RRvc+/0=
+  file: $(basename $TRAVIS_REPO_SLUG).zip
+  on:
+    tags: true
+    repo: miya0001/secure-headers
