@@ -82,9 +82,9 @@ class Secure_Headers
 		}
 
 		/**
-		 * Filters the value of HTTP X-XSS-Protection header.
+		 * Filters the value of HTTP X-Content-Type-Options header.
 		 *
-		 * @param string $x_content_type_options The value of HTTP X-XSS-Protection header.
+		 * @param string $x_content_type_options The value of HTTP X-Content-Type-Options header.
 		 */
 		$x_content_type_options = apply_filters(
 			'secure_header_x_content_type_options',
