@@ -4,6 +4,8 @@
 
 A WordPress plugin which sends HTTP security heades.
 
+**Please do not use on websites that have not activated SSL yet.**
+
 ## Default Headers
 
 ```
