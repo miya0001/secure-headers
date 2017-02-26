@@ -37,7 +37,7 @@ class Secure_Headers
 			return;
 		}
 
-		$x_frame_options           = 'DENY';
+		$x_frame_options           = 'SAMEORIGIN';
 		$strict_transport_security = 'max-age=31536000; includeSubDomains; preload';
 		$x_xss_protection          = '1; mode=block';
 		$x_content_type_options    = 'nosniff';
