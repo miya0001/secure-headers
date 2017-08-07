@@ -28,7 +28,7 @@ class Secure_Headers
 		$gh_repo = 'secure-headers';       // The repository name of your plugin.
 
 		// Activate automatic update.
-		new Miya\WP\GH_Auto_Updater( $plugin_slug, $gh_user, $gh_repo );
+		new \Miya\WP\GH_Auto_Updater( $plugin_slug, $gh_user, $gh_repo );
 	}
 
 	public function send_headers()
@@ -51,6 +51,7 @@ class Secure_Headers
 			'secure_header_x_frame_options',
 			$x_frame_options
 		);
+
 		if ( ! empty( $x_frame_options ) ) {
 			header( 'X-Frame-Options: ' . $x_frame_options );
 		}
@@ -64,6 +65,7 @@ class Secure_Headers
 			'secure_header_strict_transport_security',
 			$strict_transport_security
 		);
+
 		if ( ! empty( $strict_transport_security ) ) {
 			header( 'Strict-Transport-Security: ' . $strict_transport_security );
 		}
@@ -77,6 +79,7 @@ class Secure_Headers
 			'secure_header_x_xss_protection',
 			$x_xss_protection
 		);
+
 		if ( ! empty( $x_xss_protection ) ) {
 			header( 'X-XSS-Protection: ' . $x_xss_protection );
 		}
@@ -90,6 +93,7 @@ class Secure_Headers
 			'secure_header_x_content_type_options',
 			$x_content_type_options
 		);
+
 		if ( ! empty( $x_content_type_options ) ) {
 			header( 'X-Content-Type-Options: ' . $x_content_type_options );
 		}
