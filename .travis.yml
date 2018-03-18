@@ -19,6 +19,7 @@ after_success:
 - curl https://raw.githubusercontent.com/miya0001/auto-build/master/auto-build.sh | bash
 deploy:
   provider: releases
+  skip_cleanup: true
   api_key:
     secure: ia2IQKEuxY35FYJLQ2BWsbAjii5GUZqX4PRlmU5O2zF3i+pE0V67bxTghUXTGHwu3y4JCYjvjWCCJpox6qa2EbCC9E1AI4yNIuyUckvMyTV8NiSj8XIAEQys9VwvS6OFjS7rbh1MgncFU3nsV+sWbjpaWD4EHEdtf2k1ORYNV4Y8EKuufCGTihjUZ9pznQQ0WGeBxH337a9EO3dceQMsfdO1x1ooVzzRcudOyABCY/awXCsH5FLSMva8/3yhHsVzlfiTqcCQpJvpLmb1JiPTuv6UOZWGVzFjTlAxTG0KsIZOWLbk7q8JvSoE3hMPSdKDeZLG7CJ1+WavdsvXGO6Op/jNKudbJYQSWvmTdEUZsPXs2dII1kpKe/VWnKZo12jt0GyRGn056ecMnEvKMCdgPHIpfWY1WP2uLvPnW0UZ/uyEt4Qy3mtjRgDs5tvQYftpYD9BZZwFCk+7l31vlZWLDUPgDLd5s4wLVbSsKJpKDwHzHLj8/x0+E0vxtvOKmkhhcsX5h4V9hMl35eVXKELl9UXIl6Q9EXMuWCDRNMDQd9jB8W0fLdhOxkjCXFegQ2ey/pl43wekJotXxRUYljWx4C2u//XS/tFNR8ZhLeAX2c1npaPFLo5870N2SIm4dBpEXWx4Bv/d2+6BcnbhXMi1OsVH2r9A7RAdy1H+RRvc+/0=
   file: $(basename $TRAVIS_REPO_SLUG).zip
