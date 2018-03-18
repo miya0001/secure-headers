@@ -33,6 +33,10 @@ class Secure_Headers
 
 	public function send_headers()
 	{
+		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+			return;
+		}
+
 		if ( is_admin() ) {
 			return;
 		}
